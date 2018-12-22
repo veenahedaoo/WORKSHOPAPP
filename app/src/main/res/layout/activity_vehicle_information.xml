@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/parentLayout"
+    tools:context="com.tantransh.workshopapp.jobbooking.VehicleInformationActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.design.widget.AppBarLayout
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="55dp">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:onClick="back"
+                    android:layout_marginLeft="5dp"
+                    android:tint="@color/white"
+                    android:src="@drawable/back_icon"
+                    android:layout_gravity="center"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+                <LinearLayout
+                    android:layout_marginRight="35dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:textSize="18sp"
+                        android:text="Job Booking"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+
+                        android:textStyle="normal"
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:textSize="14sp"
+                        android:text="( Vehicle Information )"
+                        android:textColor="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+
+         <LinearLayout
+             android:orientation="vertical"
+             android:padding="10dp"
+             android:layout_marginTop="55dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+             <TextView
+                 android:id="@+id/vehicleNoHeadingTV"
+                 android:textSize="10sp"
+                 android:text="* Vehicle Registration Number"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" />
+
+             <LinearLayout
+                 android:background="@drawable/square_border1"
+                 android:orientation="horizontal"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+                 <EditText
+                     android:textAllCaps="true"
+                     android:id="@+id/vehicleRegNoET"
+                     android:inputType="textPersonName"
+                     android:textSize="12sp"
+                     android:hint="Vehicle Registration Number"
+                     android:padding="10dp"
+                     android:layout_weight="1"
+                     android:background="@android:color/transparent"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content" />
+                 <ImageView
+                     android:onClick="searchVehicle"
+                     android:background="@color/green"
+                     android:tint="@color/white"
+                     android:src="@drawable/right_arrow_icon"
+                     android:layout_width="40dp"
+                     android:layout_height="match_parent" />
+             </LinearLayout>
+
+
+             <TextView
+                 android:id="@+id/chassisNoHeadingTV"
+                 android:layout_marginTop="10dp"
+                 android:textSize="10sp"
+                 android:text="* Vehicle Identification No. / Chassis No."
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" />
+                 <EditText
+                     android:id="@+id/chassisNoET"
+                     android:inputType="textPersonName"
+                     android:textSize="12sp"
+                     android:hint="Vehicle Identification Number / Chassis Number"
+                     android:padding="10dp"
+                     android:layout_weight="1"
+                     android:background="@drawable/square_border1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content" />
+
+
+
+
+             <TextView
+                 android:layout_marginTop="10dp"
+                 android:textSize="10sp"
+                 android:text="Engine No."
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content" />
+                 <EditText
+                     android:id="@+id/engineNoET"
+                     android:inputType="textPersonName"
+                     android:textSize="12sp"
+                     android:hint="Engine Number"
+                     android:padding="10dp"
+                     android:layout_weight="1"
+                     android:background="@drawable/square_border1"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content" />
+
+
+             <LinearLayout
+                 android:layout_marginTop="10dp"
+                 android:orientation="horizontal"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+                 <LinearLayout
+                     android:padding="10dp"
+                     android:background="@drawable/rounded_corner_border2"
+                     android:layout_weight="1"
+                     android:orientation="vertical"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content">
+                     <TextView
+                         android:id="@+id/makeHeadingTV"
+
+                         android:textSize="10sp"
+                         android:text="* Make"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content" />
+                     <LinearLayout
+
+                         android:background="@drawable/square_border1"
+                         android:orientation="horizontal"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content">
+                         <Spinner
+                             style="@style/Spinner"
+
+                             android:id="@+id/makeSP"
+                             android:layout_width="match_parent"
+                             android:layout_height="35dp">
+
+                         </Spinner>
+
+                     </LinearLayout>
+
+                     <TextView
+                         android:id="@+id/otherMakeHeadingTV"
+                         android:layout_marginTop="10dp"
+                         android:textSize="10sp"
+                         android:text="Make (if not listed)"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content" />
+                         <EditText
+                             android:id="@+id/makeET"
+                             android:inputType="textPersonName"
+                             android:textSize="12sp"
+                             android:hint="Make"
+                             android:padding="10dp"
+                             android:layout_weight="1"
+                             android:background="@drawable/square_border1"
+                             android:layout_width="match_parent"
+                             android:layout_height="35dp" />
+
+
+                     <TextView
+                         android:id="@+id/modelHeadingTV"
+                         android:layout_marginTop="10dp"
+                         android:textSize="10sp"
+                         android:text="* Model"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content" />
+                         <EditText
+                             android:id="@+id/modelET"
+                             android:inputType="textPersonName"
+                             android:textSize="12sp"
+                             android:hint="Model ( Eg BMW M3 )"
+                             android:padding="10dp"
+                             android:layout_weight="1"
+                             android:background="@drawable/square_border1"
+                             android:layout_width="match_parent"
+                             android:layout_height="35dp" />
+
+
+
+                     <TextView
+                         android:layout_marginTop="10dp"
+                         android:textSize="10sp"
+                         android:text="Model Tear"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content" />
+                         <EditText
+                             android:id="@+id/modelYearET"
+                             android:inputType="number"
+                             android:textSize="12sp"
+                             android:hint="Model Year"
+                             android:padding="10dp"
+                             android:layout_weight="1"
+                             android:background="@drawable/square_border1"
+                             android:layout_width="match_parent"
+                             android:layout_height="35dp" />
+
+
+                 </LinearLayout>
+
+                 <LinearLayout
+                     android:padding="10dp"
+                     android:background="@drawable/rounded_corner_border2"
+                     android:layout_weight="1"
+                     android:orientation="vertical"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent">
+
+                     <TextView
+                         android:id="@+id/insuranceHeadingTV"
+                         android:textSize="12sp"
+                         android:textColor="@color/colorPrimary"
+                         android:textStyle="bold"
+                         android:text="* Insurance"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content" />
+
+                     <RadioGroup
+                         android:background="@drawable/square_border1"
+                         android:orientation="horizontal"
+                         android:layout_width="match_parent"
+                         android:layout_height="35dp">
+                         <RadioButton
+                             android:id="@+id/insYRB"
+                             android:textSize="12sp"
+                             android:textStyle="normal"
+                             android:textColor="@color/colorPrimary"
+                             android:text="YES"
+                             android:layout_weight="1"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content" />
+                         <RadioButton
+                             android:id="@+id/insNRB"
+                             android:textSize="12sp"
+                             android:textStyle="normal"
+                             android:textColor="@color/colorPrimary"
+                             android:text="NO"
+                             android:layout_weight="1"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content" />
+                     </RadioGroup>
+
+                     <TextView
+                         android:layout_marginTop="10dp"
+                         android:textSize="10sp"
+                         android:text="* Insurance Date"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content" />
+                     <LinearLayout
+
+                         android:background="@drawable/square_border1"
+                         android:layout_width="match_parent"
+                         android:layout_height="35dp">
+                         <TextView
+
+                             android:id="@+id/insuranceDateTV"
+                             android:layout_weight="1"
+                             android:hint="Insurance Date"
+                             android:textSize="12sp"
+                             android:padding="10dp"
+                             android:layout_width="match_parent"
+                             android:layout_height="35dp" />
+                         <ImageView
+                             android:id="@+id/insDateIV"
+                             android:onClick="selectDate"
+                             android:padding="5dp"
+                             android:tint="@color/white"
+                             android:background="@color/gray2"
+                             android:src="@drawable/calendar"
+                             android:layout_width="35dp"
+                             android:layout_height="match_parent" />
+                     </LinearLayout>
+
+                     <TextView
+                         android:layout_marginTop="10dp"
+                         android:textSize="10sp"
+                         android:text="Insurance Type"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content" />
+                     <LinearLayout
+
+                         android:background="@drawable/square_border1"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content">
+                         <Spinner
+                             style="@style/Spinner"
+                             android:id="@+id/insuranceTypeSP"
+                             android:layout_width="match_parent"
+                             android:layout_height="33dp">
+
+                         </Spinner>
+
+                     </LinearLayout>
+
+                     <TextView
+                         android:id="@+id/kilometerReadingHeadingTV"
+                         android:layout_marginTop="10dp"
+                         android:textSize="10sp"
+                         android:text="* Kilometer Reading"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content" />
+                         <EditText
+                             android:id="@+id/milageET"
+                             android:visibility="visible"
+                             android:inputType="number"
+                             android:textSize="12sp"
+                             android:hint=" Kilometer Reading"
+                             android:padding="10dp"
+                             android:layout_weight="1"
+                             android:background="@drawable/square_border1"
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent" />
+
+
+
+                 </LinearLayout>
+             </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <Button
+                android:onClick="cancel"
+                android:background="@android:color/transparent"
+                android:textColor="@color/gray0"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:text="Cancel"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <Button
+                android:onClick="moveNext"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:text="Next"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:visibility="gone"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:id="@+id/progressLO"
+            android:background="#68000000"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ProgressBar
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

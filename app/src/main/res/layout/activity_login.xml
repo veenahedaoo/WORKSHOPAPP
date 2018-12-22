@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:id="@+id/parentLayout"
+    tools:context="com.tantransh.workshopapp.login.LoginActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:minHeight="50dp"
+            android:layout_height="50dp">
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:padding="2dp"
+                    android:tint="@color/white"
+                    android:src="@drawable/close_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+                <TextView
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:text="Sign In"
+                    android:layout_weight="1"
+                    android:layout_marginRight="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@drawable/rounded_corner_border1"
+
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+            <ImageView
+                android:layout_margin="1dp"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:tint="@color/white"
+                android:src="@drawable/user"
+                android:background="@drawable/circle1"
+                android:layout_width="43dp"
+                android:layout_height="43dp" />
+            <EditText
+                android:id="@+id/userIdET"
+                android:inputType="textPersonName"
+                android:textSize="12sp"
+                android:hint="User Id"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@drawable/rounded_corner_border1"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+            <ImageView
+                android:layout_margin="1dp"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:tint="@color/white"
+                android:src="@drawable/password"
+                android:background="@drawable/circle1"
+                android:layout_width="43dp"
+                android:layout_height="43dp" />
+            <EditText
+                android:id="@+id/passwordET"
+                android:inputType="textPassword"
+                android:textSize="12sp"
+                android:hint="Password"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_gravity="center"
+                android:textColor="@color/gray1"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                android:text="Forgot..?"
+                android:background="@android:color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+        </LinearLayout>
+
+        <Button
+            android:onClick="login"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded_corner_box1"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="Login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:background="@color/pd_back"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/pdLO"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_gravity="center"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Loading..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

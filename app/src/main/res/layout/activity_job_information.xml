@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/parentLayout"
+    android:layout_height="match_parent"
+    tools:context="com.tantransh.workshopapp.jobbooking.JobInformationActivity">
+    <android.support.design.widget.AppBarLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:onClick="back"
+                android:layout_marginLeft="5dp"
+                android:tint="@color/white"
+                android:src="@drawable/back_icon"
+                android:layout_gravity="center"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <LinearLayout
+                android:layout_marginRight="35dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:textSize="18sp"
+                    android:text="Job Booking"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+
+                    android:textStyle="normal"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:textSize="14sp"
+                    android:text="( Job Information )"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_marginTop="55dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@drawable/square_border1"
+            android:padding="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Spinner
+                android:id="@+id/item_list_rv"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/add_items_button"
+                android:layout_margin="3dp"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimary"
+                android:text="+"
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:text="Sr.No"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
+            <TextView
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:text="Job Concern"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:text="Remove"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+
+        <Button
+            android:onClick="showDriver"
+            android:layout_marginTop="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@color/green"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:text="Add Driver"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" />
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/driverInfoLLO"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="normal"
+                android:textSize="11sp"
+                android:text="Customer Representative name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@drawable/square_border1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/firstNameET"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp"
+                    android:hint="First Name"
+                    android:padding="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorAccent"/>
+                <EditText
+                    android:id="@+id/lastNameET"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp"
+                    android:hint="Last Name"
+                    android:padding="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="normal"
+                android:textSize="11sp"
+                android:text="Contact Number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_marginTop="2dp"
+                android:background="@drawable/square_border1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/contactET"
+                    android:inputType="phone"
+                    android:textSize="12sp"
+                    android:hint="Customer Representative Contact Number"
+                    android:padding="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <Button
+            android:onClick="cancel"
+            android:background="@android:color/transparent"
+            android:textColor="@color/gray0"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:text="Cancel"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <Button
+            android:onClick="moveNext"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:text="Next"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>

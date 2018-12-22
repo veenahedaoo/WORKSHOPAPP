@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/parentLayout"
+    tools:context="com.tantransh.workshopapp.jobbooking.CustomerInformationActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:onClick="back"
+                android:layout_marginLeft="5dp"
+                android:tint="@color/white"
+                android:src="@drawable/back_icon"
+                android:layout_gravity="center"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <LinearLayout
+                android:layout_marginRight="35dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:textSize="18sp"
+                    android:text="Job Booking"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textStyle="normal"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:textSize="14sp"
+                    android:text="( Customer Information )"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <Button
+            android:onClick="cancel"
+            android:background="@android:color/transparent"
+            android:textColor="@color/gray0"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:text="Cancel"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <Button
+            android:onClick="moveNext"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:text="Next"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+
+    <ScrollView
+        android:layout_marginTop="55dp"
+        android:layout_above="@id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:padding="10dp"
+
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/contactHeadingTV"
+                android:text="* Contact No"
+                android:textSize="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="0dp"
+                android:background="@drawable/square_border1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:maxLength="10"
+                    android:id="@+id/contactET"
+                    android:inputType="phone"
+                    android:textSize="12sp"
+                    android:hint="Contact Number"
+                    android:padding="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp" />
+                <ImageView
+                    android:onClick="searchCustomer"
+                    android:padding="2dp"
+                    android:tint="@color/white"
+                    android:src="@drawable/right_arrow_icon"
+                    android:textColor="@color/white"
+                    android:background="@color/green"
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="Contact No"
+                android:textSize="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+                <EditText
+                    android:maxLength="10"
+                    android:id="@+id/altContactET"
+                    android:inputType="phone"
+                    android:textSize="12sp"
+                    android:hint="Altername Contact Number"
+                    android:padding="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/square_border1"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+
+
+            <TextView
+                android:id="@+id/customerNameHeadingTV"
+                android:layout_marginTop="10dp"
+                android:text="* Customer Name"
+                android:textSize="11sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="0dp"
+                android:background="@drawable/square_border1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/firstNameET"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp"
+                    android:hint="First Name"
+                    android:padding="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorAccent"/>
+                <EditText
+                    android:id="@+id/lastNameET"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp"
+                    android:hint="Last Name"
+                    android:padding="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp" />
+
+            </LinearLayout>
+
+
+
+
+            <TextView
+                android:id="@+id/addressHeadingTV"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:text="* Address"
+                android:textSize="11sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:padding="10dp"
+                    android:background="@drawable/rounded_corner_border2"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/plotNoHeadingTV"
+                        android:text="* Plot No"
+                        android:textSize="10sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                        <EditText
+                            android:id="@+id/plotNoET"
+                            android:inputType="textPersonName"
+                            android:textSize="12sp"
+                            android:hint="Plot Number"
+                            android:paddingLeft="5dp"
+                            android:background="@drawable/square_border1"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp" />
+
+
+
+                    <TextView
+                        android:id="@+id/areaHeadingTV"
+                        android:layout_marginTop="10dp"
+                        android:text="* Area"
+                        android:textSize="10sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                        <EditText
+                            android:id="@+id/areaET"
+                            android:inputType="textPostalAddress"
+                            android:textSize="12sp"
+                            android:hint="Area / Locality"
+                            android:paddingLeft="5dp"
+                            android:background="@drawable/square_border1"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp" />
+
+
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:text="Landmark"
+                        android:textSize="10sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                        <EditText
+                            android:id="@+id/landmarkET"
+                            android:inputType="textPostalAddress"
+                            android:textSize="12sp"
+                            android:hint="Landmark"
+                            android:paddingLeft="5dp"
+                            android:background="@drawable/square_border1"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp" />
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="10dp"
+                    android:background="@drawable/rounded_corner_border2"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/stateHeadingTV"
+                        android:text="* State"
+                        android:textSize="10sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:layout_marginTop="0dp"
+                        android:background="@drawable/square_border1"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Spinner
+                            android:id="@+id/stateSP"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/cityHeadingTV"
+                        android:layout_marginTop="10dp"
+                        android:text="* City"
+                        android:textSize="10sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                        <EditText
+                            android:id="@+id/cityET"
+                            android:inputType="textPersonName"
+                            android:textSize="12sp"
+                            android:hint="City"
+                            android:paddingLeft="5dp"
+                            android:background="@drawable/square_border1"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp" />
+
+
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:text="Postal Code"
+                        android:textSize="10sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                        <EditText
+                            android:id="@+id/postalET"
+                            android:maxLength="6"
+                            android:inputType="number"
+                            android:textSize="12sp"
+                            android:hint="Postal Code"
+                            android:paddingLeft="5dp"
+                            android:background="@drawable/square_border1"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="Email Id"
+                android:textSize="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/emailET"
+                    android:inputType="textEmailAddress"
+                    android:textSize="12sp"
+                    android:hint="Email - Id"
+                    android:padding="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/square_border1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="GSTIN"
+                android:textSize="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/gstinET"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp"
+                    android:hint="GSTIN"
+                    android:padding="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/square_border1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>

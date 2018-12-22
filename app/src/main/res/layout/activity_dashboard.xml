@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back1"
+    tools:context="com.tantransh.workshopapp.home.DashboardActivity">
+
+    <LinearLayout
+
+        android:background="#7e515151"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="Dashboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+        <LinearLayout
+            android:onClick="goToJobBooking"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/half_rounded_shape1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+
+                android:background="#9b232323"
+                android:padding="20dp"
+                android:tint="@color/gray0"
+                android:src="@drawable/create_job_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+            <TextView
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:textColor="@color/background"
+                android:text="Create Job"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:onClick="getCurrentJobs"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/half_rounded_shape2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:background="#b0313a41"
+                android:padding="15dp"
+                android:tint="@color/gray0"
+                android:src="@drawable/current_jobs_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+            <TextView
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:textColor="@color/background"
+                android:text="Current Jobs"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:padding="20dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:backgroundTint="@color/white"
+                android:background="@drawable/circular_ring"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:textColor="@color/background"
+                android:text="0"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:padding="0dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:onClick="getOpenJobs"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/half_rounded_shape3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:background="#b1263a3b"
+                android:padding="20dp"
+                android:tint="@color/gray0"
+                android:src="@drawable/open_jobs_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+            <TextView
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:textColor="@color/background"
+                android:text="Open Jobs"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:padding="20dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:backgroundTint="@color/white"
+                android:background="@drawable/circular_ring"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:textColor="@color/background"
+                android:text="0"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:padding="0dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/half_rounded_shape4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:padding="20dp"
+                android:background="#b04c586f"
+                android:tint="@color/gray0"
+                android:src="@drawable/offline_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+            <TextView
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:textColor="@color/background"
+                android:text="Offline Jobs"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:padding="20dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:backgroundTint="@color/white"
+                android:background="@drawable/circular_ring"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:textColor="@color/background"
+                android:text="100"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:padding="0dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/half_rounded_shape5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:background="#b3212121"
+                android:tint="@color/gray0"
+                android:padding="20dp"
+                android:src="@drawable/get_job_card_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+            <TextView
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:textColor="@color/background"
+                android:text="Get Job Card"
+                android:layout_gravity="center"
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

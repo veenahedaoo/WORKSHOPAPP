@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="5dp"
+        app:cardMaxElevation="10dp"
+        app:cardUseCompatPadding="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="3dp"
+                android:background="@drawable/car1"
+                android:backgroundTint="#22000000">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:id="@+id/jobcardNumTV"
+                    android:background="@color/gray2"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="5dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="MH40AG1035"
+                    android:gravity="center"
+                    android:id="@+id/vehicleRegsNOTV"
+                    android:textStyle="bold"
+                    android:padding="3dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorPrimary"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hero Maestro"
+                    android:id="@+id/makemodelTV"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:padding="2dp"
+                    android:layout_marginTop="0dp"
+                    android:textColor="@color/colorAccent"/>
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?android:progressBarStyleHorizontal"
+                    android:progressTint="#ef1515"
+                    android:progress="20"
+                    android:id="@+id/progressBarPB"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
+                <TextView
+                    android:id="@+id/jobStatusTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Job Status"
+                    android:gravity="center"
+                    android:textStyle="normal"
+                    android:padding="3dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorPrimary"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Booked On : 22-11-2017"
+                    android:gravity="center"
+                    android:textStyle="normal"
+                    android:id="@+id/bookedOnTV"
+                    android:padding="3dp"
+                    android:textSize="13sp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorAccent"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Attended By"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:padding="3dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorPrimary"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Amit Sharma"
+
+                    android:id="@+id/attendedByTV"
+                    android:gravity="center"
+                    android:textStyle="normal"
+                    android:padding="3dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorAccent"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Customer Name "
+                    android:textSize="13sp"
+                    android:padding="2dp"
+                    android:layout_marginTop="0dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Customer Name "
+                    android:textSize="12sp"
+                    android:textColor="@color/colorAccent"
+                    android:id="@+id/customernameTV"
+                    android:textStyle="bold"
+                    android:background="@drawable/square_border1"
+                    android:padding="2dp"
+                    android:layout_marginTop="0dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Customer Contact Number "
+                    android:textSize="13sp"
+                    android:padding="2dp"
+                    android:layout_marginTop="2dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Customer Contact Number "
+                    android:textSize="12sp"
+                    android:textColor="@color/colorAccent"
+                    android:id="@+id/customercontactTV"
+                    android:textStyle="bold"
+                    android:background="@drawable/square_border1"
+                    android:padding="2dp"
+                    android:layout_marginTop="0dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" Representative Name"
+                    android:textSize="13sp"
+                    android:padding="2dp"
+                    android:layout_marginTop="2dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Representative Name "
+                    android:textSize="12sp"
+                    android:textColor="@color/colorAccent"
+                    android:id="@+id/representativenameTV"
+                    android:textStyle="bold"
+                    android:background="@drawable/square_border1"
+                    android:padding="2dp"
+                    android:layout_marginTop="0dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" Representative Number"
+                    android:textSize="13sp"
+                    android:padding="2dp"
+                    android:layout_marginTop="2dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Representative Number "
+                    android:textSize="12sp"
+                    android:textColor="@color/colorAccent"
+                    android:id="@+id/representativenumberTV"
+                    android:textStyle="bold"
+                    android:background="@drawable/square_border1"
+                    android:padding="2dp"
+                    android:layout_marginTop="0dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Job Card"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/jobcardBTN"
+                        android:textColor="@color/white"
+                        android:background="@color/gray2"/>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="Job Info"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/jobInfoBTN"
+                        android:textColor="@color/white"
+                        android:background="@color/gray1"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>
