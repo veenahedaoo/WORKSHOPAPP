@@ -31,6 +31,7 @@ public class CurrentJobListActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
+                assert action != null;
                 switch (action){
                     case AppConstants.ACTION_CURRENT_JOB_LIST_LOADED:
                         CurrentJobList currentJobList = (CurrentJobList) intent.getSerializableExtra(AppConstants.EXTRA_CURRENT_JOB_LIST);
@@ -44,6 +45,8 @@ public class CurrentJobListActivity extends AppCompatActivity {
                         break;
 
                     case AppConstants.ACTION_NO_RECORDS:
+                        System.out.println("no jobs booked today");
+                        break;
 
                 }
             }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,7 +20,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Job card Information"
+                    android:text="@string/job_card_information"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="#ffffff"
@@ -46,51 +45,53 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="To ,"
+                        android:layout_marginStart="10dp"
                         android:padding="10dp"
                         android:textColor="#000000"
                         android:textStyle="bold"
-                        android:layout_marginLeft="10dp"/>
+                        android:text="@string/to"/>
                     <TextView
-                        android:layout_marginRight="50dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Customer Name"
+                        android:layout_marginEnd="50dp"
                         android:textStyle="bold"
                         android:id="@+id/customerNameTV"
-                        android:layout_marginLeft="30dp"
-                        android:textColor="#000000"/>
+                        android:layout_marginStart="30dp"
+                        android:text="@string/customer_name"
+                        android:textColor="#000000"
+                         />
                     <TextView
-                        android:layout_marginRight="50dp"
+                        android:layout_marginEnd="50dp"
+                        android:layout_marginStart="30dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Customer Contact Number"
+                        android:text="@string/customer_contact"
                         android:textStyle="bold"
                         android:id="@+id/customerContactTV"
-                        android:layout_marginLeft="30dp"
                         android:textColor="#000000"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Address"
+                        android:layout_marginEnd="50dp"
                         android:id="@+id/addressTV"
                         android:textStyle="bold"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="50dp"
+                        android:layout_marginStart="30dp"
+                        android:text="@string/customer_address"
                         android:textColor="#000000"/>
                     <TextView
-                        android:layout_marginRight="50dp"
+                        android:layout_marginEnd="50dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="City-440022"
+                        android:layout_marginStart="30dp"
                         android:id="@+id/cityandPinTV"
                         android:textStyle="bold"
-                        android:layout_marginLeft="30dp"
+                        android:text="@string/city_pin"
                         android:textColor="#000000"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -101,7 +102,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Job Card Number"
+                            android:text="@string/job_card_number"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -109,7 +110,7 @@
                             android:id="@+id/jobcardNumberTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="job card number"
+                            android:text="@string/job_card_number"
                             android:textSize="13sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -126,7 +127,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Vehicle Registration Number"
+                            android:text="@string/vehicle_registration_number"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -134,7 +135,7 @@
                             android:id="@+id/vehicleRegsTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="MH40AG1035"
+                            android:text="@string/sample_veh_no"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -150,6 +151,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -160,7 +162,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Chassis Number"
+                            android:text="@string/chassis_number"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -168,7 +170,7 @@
                             android:id="@+id/chassisNumberTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="chassis number"
+                            android:text="@string/chassis_number"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -185,7 +187,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Engine Number"
+                            android:text="@string/engine_number"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -193,7 +195,7 @@
                             android:id="@+id/engineNumberTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="engine number"
+                            android:text="@string/engine_number"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -208,6 +210,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -218,7 +221,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Make"
+                            android:text="@string/make"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -226,7 +229,7 @@
                             android:id="@+id/makeTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="make"
+                            android:text="@string/make"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -243,7 +246,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Model"
+                            android:text="@string/model"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -251,7 +254,7 @@
                             android:id="@+id/modelTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="model"
+                            android:text="@string/model"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -267,6 +270,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -277,7 +281,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Model Year"
+                            android:text="@string/model_year"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -288,7 +292,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/square_border1"
                             android:padding="6dp"
-                            android:text="model year"
+                            android:text="@string/model_year"
                             android:textColor="#454343"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -303,7 +307,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Mileage"
+                            android:text="@string/kilometer_reading"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -311,7 +315,7 @@
                             android:id="@+id/mileageTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="mileage"
+                            android:text="@string/kilometer_reading"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -326,6 +330,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -336,7 +341,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Booking Date"
+                            android:text="@string/booking_date"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -344,7 +349,7 @@
                             android:id="@+id/bookingDateTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="booking date"
+                            android:text="@string/booking_date"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -362,7 +367,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Previous Booking Date"
+                            android:text="@string/last_service_date"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -370,7 +375,7 @@
                             android:id="@+id/previousBookingDateTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="previous booking date"
+                            android:text="@string/last_service_date"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -385,6 +390,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -395,7 +401,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Cust Representative Name"
+                            android:text="@string/rep_name"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -403,7 +409,7 @@
                             android:id="@+id/customerRepresentativeNameTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="cust rep. name"
+                            android:text="@string/rep_name"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -421,7 +427,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Cust Representative Contact"
+                            android:text="@string/rep_contact"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -429,7 +435,7 @@
                             android:id="@+id/representativeContactTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="cust rep. contact"
+                            android:text="@string/rep_contact"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -442,6 +448,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -452,7 +459,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Attended By"
+                            android:text="@string/attended_by"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -460,7 +467,7 @@
                             android:id="@+id/attendedByTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="attended by"
+                            android:text="@string/attended_by"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -478,7 +485,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Job Status"
+                            android:text="@string/job_status"
                             android:textSize="12sp"
                             android:textStyle="normal"
                             android:textColor="@color/gray2"/>
@@ -486,7 +493,7 @@
                             android:id="@+id/jobStatusTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="job status"
+                            android:text="@string/job_status"
                             android:textSize="14sp"
                             android:padding="6dp"
                             android:textStyle="bold"
@@ -506,7 +513,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Spares List"
+                        android:text="@string/spares_list"
                         android:background="@color/gray2"
                         android:textColor="#ffffff"
                         android:padding="7dp"
@@ -518,13 +525,12 @@
                         android:orientation="horizontal"
                         android:background="@color/gray1">
                         <TextView
-                            android:layout_weight="1.2"
-                            android:layout_width="match_parent"
+                            android:layout_width="40dp"
                             android:layout_height="wrap_content"
-                            android:text="Item"
+                            android:layout_marginStart="5dp"
                             android:textSize="13sp"
                             android:textStyle="bold"
-                            android:layout_marginLeft="5dp"
+                            android:text="@string/sr_no"
                             android:textColor="#000000"/>
                         <View
                             android:layout_width="0.5dp"
@@ -533,11 +539,11 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Spares"
+                            android:layout_marginStart="5dp"
                             android:layout_weight="1"
                             android:textSize="13sp"
                             android:textStyle="bold"
-                            android:layout_marginLeft="5dp"
+                            android:text="@string/spare_name"
                             android:textColor="#000000"/>
                         <View
                             android:layout_width="0.5dp"
@@ -546,38 +552,25 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Make"
-                            android:layout_weight="1"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1.4"
                             android:textSize="13sp"
                             android:textStyle="bold"
-                            android:layout_marginLeft="5dp"
+                            android:text="@string/make"
                             android:textColor="#000000"/>
                         <View
                             android:layout_width="0.5dp"
                             android:layout_height="match_parent"
                             android:background="#000000"/>
                         <TextView
-                            android:layout_weight="1.2"
-                            android:layout_width="match_parent"
+                            android:layout_width="40dp"
                             android:layout_height="wrap_content"
-                            android:text="Qty"
+                            android:layout_marginStart="5dp"
                             android:textSize="13sp"
                             android:textStyle="bold"
-                            android:layout_marginLeft="5dp"
+                            android:text="@string/qty"
                             android:textColor="#000000"/>
-                        <View
-                            android:layout_width="0.5dp"
-                            android:layout_height="match_parent"
-                            android:background="#000000"/>
-                        <TextView
-                            android:layout_weight="1.1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Amount"
-                            android:textSize="13sp"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="5dp"
-                            android:textColor="#000000"/>
+
 
                     </LinearLayout>
                     <LinearLayout
@@ -598,7 +591,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Labour Charges List"
+                        android:text="@string/service_list"
                         android:background="@color/gray2"
                         android:textColor="#ffffff"
                         android:padding="7dp"
@@ -610,13 +603,12 @@
                         android:orientation="horizontal"
                         android:background="@color/gray1">
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="40dp"
                             android:layout_height="wrap_content"
-                            android:text="Sr.no"
-                            android:layout_weight="2"
+                            android:layout_marginStart="5dp"
                             android:textSize="13sp"
                             android:textStyle="bold"
-                            android:layout_marginLeft="5dp"
+                            android:text="@string/sr_no"
                             android:textColor="#000000"/>
                         <View
                             android:layout_width="0.5dp"
@@ -624,32 +616,21 @@
                             android:background="#000000"/>
                         <TextView
                             android:layout_weight="1"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Labour Service Name"
+                            android:layout_marginStart="5dp"
                             android:textSize="13sp"
                             android:textStyle="bold"
-                            android:layout_marginLeft="5dp"
+                            android:text="@string/service_name"
                             android:textColor="#000000"/>
-                        <View
-                            android:layout_width="0.5dp"
-                            android:layout_height="match_parent"
-                            android:background="#000000"/>
-                        <TextView
-                            android:layout_weight="1.7"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Amount"
-                            android:textSize="13sp"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="5dp"
-                            android:textColor="#000000"/>
+
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/labourListLL"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        tools:ignore="TooManyViews">
 
                     </LinearLayout>
                 </LinearLayout>
@@ -661,7 +642,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Note :"
+                        android:text="@string/note"
                         android:layout_margin="10dp"
                         android:textStyle="bold"
                         android:textColor="#000000"/>
@@ -678,7 +659,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Invoice Details"
+                        android:text="@string/invoice_details"
                         android:background="@color/gray2"
                         android:textColor="#ffffff"
                         android:padding="7dp"
@@ -703,7 +684,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Total Amount"
+                        android:text="@string/total_amount"
                         android:padding="10dp"
                         android:background="@drawable/square_border1"
                         android:layout_weight="1"
@@ -714,7 +695,7 @@
                         android:id="@+id/totalAmountTV"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="00000.00"
+                        android:text="@string/sample_amt"
                         android:background="@drawable/square_border1"
                         android:padding="10dp"
                         android:layout_weight="1"
@@ -745,7 +726,7 @@
             android:textSize="20sp"
             android:padding="10dp"
             android:gravity="center"
-            android:text="Loading..."
+            android:text="@string/loading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

@@ -1,8 +1,10 @@
 package com.tantransh.workshopapp.requestadapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
+import com.android.volley.ParseError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -16,9 +18,12 @@ import com.tantransh.workshopapp.services.ServiceDispatcher;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 public class CustomerRequestAdapter implements CustomerRequestListener {
     private ServiceDispatcher serviceDispatcher;
     private Context context;
+    @SuppressLint("StaticFieldLeak")
     private static  CustomerRequestAdapter instance;
     private Intent broadcastIntent;
 
@@ -40,59 +45,81 @@ public class CustomerRequestAdapter implements CustomerRequestListener {
 
     @Override
     public void addCustomer(CustomerInformation customerInformation) {
-        serviceDispatcher.addCustomer(customerInformation, new Response.Listener() {
+        serviceDispatcher.addCustomer(customerInformation, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(Object response) {
+            public void onResponse(JSONObject response) {
                 System.out.println("Response : "+response);
-                JSONObject responseJSON = (JSONObject) response;
-                try {
-                    if(responseJSON.has("msg") && responseJSON.getString("msg").equals("SUCCESS")){
-                        BookingDetails bookingDetails = BookingDetails.getInstance();
-                        bookingDetails.setCustomerId(responseJSON.getString("customerId"));
-                        success("CUSTOMER ADDED");
-                    }
-                    else{
-                        failed(responseJSON.getString("msg"));
+                try{
+                    switch (response.getInt("result")){
+                        case 200:
+                            BookingDetails bookingDetails = BookingDetails.getInstance();
+                            bookingDetails.setCustomerId(response.getJSONObject("data").getString("customer_id"));
+                            success("CUSTOMER ADDED");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    failed("ERROR");
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println("Error : "+error);
+                if(error.networkResponse!=null && error.networkResponse.data != null){
+                    switch (error.networkResponse.statusCode){
+                        case 400:
+                            try {
+                                String res = new String(error.networkResponse.data, "UTF-8");
+                                System.out.println(res);
+                                JSONObject json = new JSONObject(res);
+                                if(json.getString("data").equalsIgnoreCase("DUPLICATE CONTACT")){
+                                    failed(json.getString("data"));
+                                }
+                            } catch (UnsupportedEncodingException | JSONException e) {
+                                e.printStackTrace();
+                            }
+                    }
+                }
             }
         });
     }
 
     @Override
     public void searchCustomerByContact(String phoneNo) {
-        serviceDispatcher.searchCustomerByContact(phoneNo, new Response.Listener() {
+        serviceDispatcher.searchCustomerByContact(phoneNo, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(Object response) {
+            public void onResponse(JSONObject response) {
+
                 System.out.println(response);
-                JSONObject rJson = (JSONObject) response;
-                if(rJson.has("msg")){
-                    try {
-                        failed(rJson.getString("msg"));
-                        return;
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                try{
+                    switch (response.getInt("result")){
+                        case 200:
+                            Gson gson = new Gson();
+                            CustomerInformation customerInformation = gson.fromJson(response.getJSONObject("data").toString(),CustomerInformation.class);
+                            broadcastIntent.setAction(AppConstants.ACTION_CUSTOMER_FOUND);
+                            broadcastIntent.putExtra(AppConstants.EXTRA_CUTOMER_INFORMATION,customerInformation);
+                            context.sendBroadcast(broadcastIntent);
+                            break;
+
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                Gson gson = new Gson();
-                CustomerInformation customerInformation = gson.fromJson(rJson.toString(),CustomerInformation.class);
-                broadcastIntent.setAction(AppConstants.ACTION_CUSTOMER_FOUND);
-                broadcastIntent.putExtra(AppConstants.EXTRA_CUTOMER_INFORMATION,customerInformation);
-                context.sendBroadcast(broadcastIntent);
+
+
             }
         }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                System.err.println(error);
-                error(error);
+            public void onErrorResponse(VolleyError verror) {
+                if(verror instanceof ParseError){
+                    if(verror.getMessage().trim().equalsIgnoreCase("org.json.JSONException: End of input at character 0 of")){
+                        failed("NO RECORD");
+                    }
+                }
+                else{
+                    error(verror);
+                }
+
             }
         });
 
@@ -100,30 +127,46 @@ public class CustomerRequestAdapter implements CustomerRequestListener {
 
     @Override
     public void searchCustomerByVehicle(String vehicleNo) {
-        serviceDispatcher.searchCustomerByVehicle(vehicleNo, new Response.Listener() {
+        serviceDispatcher.searchCustomerByVehicle(vehicleNo, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(Object response) {
+            public void onResponse(JSONObject response) {
                 System.out.println(response);
-                JSONObject rJson = (JSONObject) response;
-                if(rJson.has("msg")){
-                    try {
-                        failed(rJson.getString("msg"));
-                        return;
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                try{
+                    switch (response.getInt("result")){
+                        case 200:
+                            Gson gson = new Gson();
+                            CustomerInformation customerInformation = gson.fromJson(response.getJSONObject("data").toString(),CustomerInformation.class);
+                            broadcastIntent.setAction(AppConstants.ACTION_CUSTOMER_FOUND);
+                            broadcastIntent.putExtra(AppConstants.EXTRA_CUTOMER_INFORMATION,customerInformation);
+                            context.sendBroadcast(broadcastIntent);
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                Gson gson = new Gson();
-                CustomerInformation customerInformation = gson.fromJson(rJson.toString(),CustomerInformation.class);
-                broadcastIntent.setAction(AppConstants.ACTION_CUSTOMER_FOUND);
-                broadcastIntent.putExtra(AppConstants.EXTRA_CUTOMER_INFORMATION,customerInformation);
-                context.sendBroadcast(broadcastIntent);
+
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.err.println(error);
-                error(error);
+                System.out.println("Error : "+error);
+                if(error.networkResponse!=null && error.networkResponse.data != null){
+                    switch (error.networkResponse.statusCode){
+                        case 204:
+                            failed("NO RECORD");
+                            break;
+
+                    }
+                }
+                else if(error instanceof ParseError){
+                    if(error.getMessage().trim().equalsIgnoreCase("org.json.JSONException: End of input at character 0 of")){
+                        failed("NO RECORD");
+                    }
+                }
+                else {
+                    error(error);
+
+                }
             }
         });
 
@@ -131,30 +174,29 @@ public class CustomerRequestAdapter implements CustomerRequestListener {
 
     @Override
     public void updateCustomer(final CustomerInformation customerInformation) {
-        serviceDispatcher.updateCustomer(customerInformation, new Response.Listener() {
+        serviceDispatcher.updateCustomer(customerInformation, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(Object response) {
+            public void onResponse(JSONObject response) {
                 System.out.println("Response : "+response);
-                JSONObject responseJSON = (JSONObject) response;
-                try {
-                    if(responseJSON.getString("msg").equals("CUSTOMER UPDATED")){
-                        broadcastIntent.setAction(AppConstants.ACTION_CUSTOMER_UPDATED);
-                        BookingDetails bookingDetails = BookingDetails.getInstance();
-                        bookingDetails.setCustomerId(customerInformation.getCustomerId());
-                        context.sendBroadcast(broadcastIntent);
-                    }
-                    else{
-                        failed(responseJSON.getString("msg"));
+                try{
+                    switch (response.getInt("result")){
+                        case 200:
+                            broadcastIntent.setAction(AppConstants.ACTION_CUSTOMER_UPDATED);
+                            BookingDetails bookingDetails = BookingDetails.getInstance();
+                            bookingDetails.setCustomerId(customerInformation.getCustomerId());
+                            context.sendBroadcast(broadcastIntent);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    failed("ERROR");
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println("Error : "+error);
+                error(error);
+
             }
         });
     }
@@ -179,17 +221,19 @@ public class CustomerRequestAdapter implements CustomerRequestListener {
 
     @Override
     public void failed(String message) {
-        if(message.equals("ERROR")){
-            broadcastIntent.setAction(AppConstants.ACTION_SERVER_ERROR);
-            broadcastIntent.putExtra("msg","Something went wrong");
-        }
-        else if(message.equals("DUPLICATE CONTACT NO.")){
-            broadcastIntent.setAction(AppConstants.ACTION_DUPLICATE_CONTACT);
+        switch (message) {
+            case "ERROR":
+                broadcastIntent.setAction(AppConstants.ACTION_SERVER_ERROR);
+                broadcastIntent.putExtra("msg", "Something went wrong");
+                break;
+            case "DUPLICATE CONTACT":
+                broadcastIntent.setAction(AppConstants.ACTION_DUPLICATE_CONTACT);
 
-        }
-        else if(message.equals("NO RECORD") || message.equals("NO RECORDS")){
-            broadcastIntent.setAction(AppConstants.ACTION_NO_RECORDS);
-
+                break;
+            case "NO RECORD":
+            case "NO RECORDS":
+                broadcastIntent.setAction(AppConstants.ACTION_NO_RECORDS);
+                break;
         }
 
         context.sendBroadcast(broadcastIntent);

@@ -13,7 +13,7 @@ public class JobConcernItem {
     @Expose
     public String itemName;
 
-    @SerializedName("item_category")
+    @SerializedName("category_id")
     @Expose
     public String categoryName;
 }

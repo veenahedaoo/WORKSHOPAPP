@@ -1,8 +1,10 @@
 package com.tantransh.workshopapp.requestadapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
+import com.android.volley.ParseError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -16,9 +18,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class VehicleRequestAdapter implements VehicleRequestListener {
-    ServiceDispatcher serviceDispatcher;
-
+    @SuppressLint("StaticFieldLeak")
     private static VehicleRequestAdapter instance;
+    private ServiceDispatcher serviceDispatcher;
     private Context context;
     private Intent broadcastIntent;
     public static VehicleRequestAdapter getInstance(Context context){
@@ -38,18 +40,17 @@ public class VehicleRequestAdapter implements VehicleRequestListener {
     public void registerVehicle(VehicleInformation vehicleInformation) {
 
         try {
-            serviceDispatcher.registerVehicle(vehicleInformation, new Response.Listener() {
+            serviceDispatcher.registerVehicle(vehicleInformation, new Response.Listener<JSONObject>() {
                 @Override
-                public void onResponse(Object response) {
+                public void onResponse(JSONObject response) {
                     System.out.println("Response : "+response);
-                    JSONObject json = (JSONObject) response;
+
                     try {
-                        String msg = json.getString("msg");
-                        if(msg.equals("SUCCESS")){
-                            success("SUCCESS");
-                        }
-                        else{
-                            failed(msg);
+                        switch(response.getInt("result")){
+                            case 200:
+                            case 201:
+                                success("SUCCESS");
+                                break;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -58,64 +59,100 @@ public class VehicleRequestAdapter implements VehicleRequestListener {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    error(error);
+                    if(error.networkResponse != null && error.networkResponse.data != null){
+                        switch (error.networkResponse.statusCode){
+                            case 400:
+                                failed("FAILED");
+                        }
+                    }
+                    else if(error instanceof ParseError){
+                        if(error.getMessage().trim().equalsIgnoreCase("org.json.JSONException: End of input at character 0 of")){
+                            error(error);
+                        }
+                    }
+                    else{
+                        error(error);
+                    }
 
                 }
             });
         } catch (JSONException e) {
             e.printStackTrace();
+
         }
     }
 
     @Override
     public void searchVehicle(String vehicleNo) {
-        serviceDispatcher.searchVehicle(vehicleNo, new Response.Listener() {
+        serviceDispatcher.searchVehicle(vehicleNo, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(Object response) {
+            public void onResponse(JSONObject response) {
                 System.out.println(response);
-                JSONObject json = (JSONObject) response;
-                if(json.has("msg")){
-                    try {
-                        failed(json.getString("msg"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                try{
+                    switch (response.getInt("result")){
+                        case 200:
+                            Gson gson = new Gson();
+                            VehicleInformation vehicleInformation = gson.fromJson(response.getJSONObject("data").toString(),VehicleInformation.class);
+                            success(vehicleInformation);
+                            break;
+
                     }
-                }
-                else{
-                    Gson gson = new Gson();
-                    VehicleInformation vehicleInformation = gson.fromJson(json.toString(),VehicleInformation.class);
-                    success(vehicleInformation);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
-                error(error);
+                if(error.networkResponse!=null && error.networkResponse.data !=null){
+                    switch (error.networkResponse.statusCode){
+                        case 204:
+                            failed("NO RECORDS");
+                            break;
+                        case 400:
+                            error(error);
+                            break;
+                        default:
+                            error(error);
+                            break;
+                    }
+                }
+                else if(error instanceof ParseError){
+                    if(error.getMessage().trim().equalsIgnoreCase("org.json.JSONException: End of input at character 0 of")){
+                        failed("NO RECORDS");
+                    }
+                }
+                else {
+                    error(error);
+                }
             }
         });
     }
 
     @Override
     public void updateVehicle(VehicleInformation vehicleInformation) {
-        serviceDispatcher.updateVehicle(vehicleInformation, new Response.Listener() {
+        serviceDispatcher.updateVehicle(vehicleInformation, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(Object response) {
+            public void onResponse(JSONObject response) {
                 System.out.println(response);
-                JSONObject json = (JSONObject) response;
-                try {
-                    if(json.getString("msg").equals("UPDATED")){
-                        success(json.getString("msg"));
+                try{
+                    switch (response.getInt("result")){
+                        case 200:
+                            success("UPDATED");
+                            break;
+                        case 201:
+                            success("SUCCESS");
+                            break;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
                 error(error);
             }
         });
@@ -158,9 +195,10 @@ public class VehicleRequestAdapter implements VehicleRequestListener {
         context.sendBroadcast(broadcastIntent);
     }
 
-    public void success(VehicleInformation vehicleInformation){
+    private void success(VehicleInformation vehicleInformation){
         broadcastIntent.setAction(AppConstants.ACTION_VEHICLE_INFO_LOADED);
         broadcastIntent.putExtra(AppConstants.EXTRA_VEHICLE_INFO,vehicleInformation);
+        System.out.println("vehicle no : "+vehicleInformation.getVehicleRegNo());
         context.sendBroadcast(broadcastIntent);
     }
 }

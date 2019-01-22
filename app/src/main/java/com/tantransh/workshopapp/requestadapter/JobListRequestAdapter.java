@@ -3,6 +3,7 @@ package com.tantransh.workshopapp.requestadapter;
 import android.content.Context;
 import android.content.Intent;
 
+import com.android.volley.ParseError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.gson.Gson;
@@ -35,93 +36,110 @@ public class JobListRequestAdapter implements JobListRequestLister {
         return new JobListRequestAdapter(context);
     }
 
+    /**
+     * methodname : getCurrentJobs
+     * description : fetch jobs list which is booked today
+     */
     @Override
     public void getCurrentJobs() {
-        serviceDispatcher.getCurrentJobs(new Response.Listener() {
+        serviceDispatcher.getCurrentJobs(new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(Object response) {
-                JSONArray listArr = (JSONArray) response;
+            public void onResponse(JSONObject response) {
 
-                if(listArr.toString().contains("NO RECORDS")){
-                    broadcastIntent.setAction(AppConstants.ACTION_NO_RECORDS);
-                    context.sendBroadcast(broadcastIntent);
-                    return;
-                }
+                try{
+                    switch (response.getInt("result")){
+                        case 200:
+                            JSONArray listArr = response.getJSONArray("data");
+                            Gson gson = new Gson();
+                            CurrentJobList currentJobList = CurrentJobList.getInstance();
+                            currentJobList.remove();
 
-                if(listArr.toString().contains("ERROR")){
-                    broadcastIntent.setAction(AppConstants.ACTION_SERVER_ERROR);
-                    context.sendBroadcast(broadcastIntent);
-                    return;
-                }
+                            for(int i = 0; i<listArr.length();i++){
+                                try {
+                                    JSONObject jsonObject = listArr.getJSONObject(i);
+                                    CurrentJobInfo jobInfo = gson.fromJson(jsonObject.toString(),CurrentJobInfo.class);
+                                    currentJobList.addJob(jobInfo);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
-                Gson gson = new Gson();
-                CurrentJobList currentJobList = CurrentJobList.getInstance();
-                currentJobList.remove();
+                            }
 
-                for(int i = 0; i<listArr.length();i++){
-                    try {
-                        JSONObject jsonObject = listArr.getJSONObject(i);
-                        CurrentJobInfo jobInfo = gson.fromJson(jsonObject.toString(),CurrentJobInfo.class);
-                        currentJobList.addJob(jobInfo);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                            System.out.println("current jobs : "+currentJobList.getSize());
+
+                            broadcastIntent.setAction(AppConstants.ACTION_CURRENT_JOB_LIST_LOADED);
+                            broadcastIntent.putExtra(AppConstants.EXTRA_CURRENT_JOB_LIST,currentJobList);
+                            context.sendBroadcast(broadcastIntent);
+
                     }
-
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-                System.out.println("current jobs : "+currentJobList.getSize());
-
-                broadcastIntent.setAction(AppConstants.ACTION_CURRENT_JOB_LIST_LOADED);
-                broadcastIntent.putExtra(AppConstants.EXTRA_CURRENT_JOB_LIST,currentJobList);
-                context.sendBroadcast(broadcastIntent);
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Error : "+error);
-                String message = Validator.getErrorMessage(error);
-                broadcastIntent.setAction(AppConstants.ACTION_SERVER_ERROR);
-                broadcastIntent.putExtra("msg",message);
-                context.sendBroadcast(broadcastIntent);
+                if(error instanceof ParseError && error.getMessage().trim().equalsIgnoreCase("org.json.JSONException: End of input at character 0 of")){
+                        broadcastIntent.setAction(AppConstants.ACTION_NO_RECORDS);
+                        context.sendBroadcast(broadcastIntent);
+                }
+                else{
+                    System.out.println("Error : "+error);
+                    String message = Validator.getErrorMessage(error);
+                    broadcastIntent.setAction(AppConstants.ACTION_SERVER_ERROR);
+                    broadcastIntent.putExtra("msg",message);
+                    context.sendBroadcast(broadcastIntent);
+                }
+
             }
         });
     }
 
     @Override
     public void getOpenJobs() {
-        serviceDispatcher.getOpenJobs(new Response.Listener() {
+        serviceDispatcher.getOpenJobs(new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(Object response) {
-                JSONArray responseArr = (JSONArray) response;
-                OpenJoblist openJoblist = OpenJoblist.getInstance();
-                openJoblist.removeAll();
-                Gson gson = new Gson();
-                for(int i =0; i<responseArr.length(); i++){
-                    try {
-                        JSONObject json = responseArr.getJSONObject(i);
-                        if(json.has("msg")){
-                            if(json.getString("msg").equals("NO RECORDS")){
-                                broadcastIntent.setAction(AppConstants.ACTION_NO_RECORDS);
+            public void onResponse(JSONObject response) {
+
+                try{
+                    switch (response.getInt("result")){
+                        case 200:
+                            JSONArray responseArr = response.getJSONArray("data");
+                            OpenJoblist openJoblist = OpenJoblist.getInstance();
+                            openJoblist.removeAll();
+                            Gson gson = new Gson();
+                            for(int i =0; i<responseArr.length(); i++){
+                                try {
+                                    JSONObject json = responseArr.getJSONObject(i);
+                                    if(json.has("msg")){
+                                        if(json.getString("msg").equals("NO RECORDS")){
+                                            broadcastIntent.setAction(AppConstants.ACTION_NO_RECORDS);
+                                        }
+                                        else {
+                                            broadcastIntent.setAction(AppConstants.ACTION_SERVER_ERROR);
+                                        }
+                                        context.sendBroadcast(broadcastIntent);
+                                        break;
+                                    }
+                                    else{
+                                        OpenJobInfo openJobInfo = gson.fromJson(json.toString(),OpenJobInfo.class);
+                                        openJoblist.setOpenJob(openJobInfo);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            else {
-                                broadcastIntent.setAction(AppConstants.ACTION_SERVER_ERROR);
-                            }
+
+                            broadcastIntent.setAction(AppConstants.ACTION_OPEN_JOB_LIST_LOADED);
+                            broadcastIntent.putExtra(AppConstants.EXTRA_OPEN_JOB_LIST,openJoblist);
                             context.sendBroadcast(broadcastIntent);
-                            break;
-                        }
-                        else{
-                            OpenJobInfo openJobInfo = gson.fromJson(json.toString(),OpenJobInfo.class);
-                            openJoblist.setOpenJob(openJobInfo);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-                broadcastIntent.setAction(AppConstants.ACTION_OPEN_JOB_LIST_LOADED);
-                broadcastIntent.putExtra(AppConstants.EXTRA_OPEN_JOB_LIST,openJoblist);
-                context.sendBroadcast(broadcastIntent);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -139,7 +157,17 @@ public class JobListRequestAdapter implements JobListRequestLister {
 
     @Override
     public void getJobInformation(String jobId) {
-
+        serviceDispatcher.getJobInformation(jobId, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
     }
 
     @Override

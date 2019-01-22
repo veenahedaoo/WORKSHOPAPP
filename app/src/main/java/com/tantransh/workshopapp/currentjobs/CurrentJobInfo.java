@@ -1,9 +1,46 @@
 package com.tantransh.workshopapp.currentjobs;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class CurrentJobInfo implements Serializable{
-    private String bookingId, kilometers,vehicleNo,bookingStatus,model,makeName,customerId,firstName,lastName,contact;
+
+    @Expose
+    @SerializedName("booking_id")
+    private String bookingId;
+    @Expose
+    @SerializedName("kilometers")
+    private String kilometers;
+    @Expose
+    @SerializedName("vehicle_registration_number")
+    private String vehicleNo;
+    @Expose
+    @SerializedName("booking_status")
+    private String bookingStatus;
+    @Expose
+    @SerializedName("model")
+    private String model;
+    @Expose
+    @SerializedName("make")
+    private String makeName;
+    @Expose
+    @SerializedName("customer_id")
+    private String customerId;
+    @Expose
+    @SerializedName("rep_fname")
+    private String firstName;
+    @Expose
+    @SerializedName("rep_lname")
+    private String lastName;
+    @Expose
+    @SerializedName("rep_number")
+    private String contact;
+
+    @Expose
+    @SerializedName("customer_name")
+    private String customerName;
 
     public String getBookingId() {
         return bookingId;
@@ -83,5 +120,13 @@ public class CurrentJobInfo implements Serializable{
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 }

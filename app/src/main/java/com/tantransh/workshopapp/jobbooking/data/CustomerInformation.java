@@ -1,9 +1,58 @@
 package com.tantransh.workshopapp.jobbooking.data;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class CustomerInformation implements Serializable{
-    private String customerId, firstName, lastName, contact, alternateContact, email, plotNo, area, landmark, stateId, stateName, city, postalCode, gstin;
+    @Expose
+    @SerializedName("customer_id")
+    private String customerId;
+    @Expose
+    @SerializedName("first_name")
+    private String firstName;
+    @Expose
+    @SerializedName("last_name")
+    private String lastName;
+    @Expose
+    @SerializedName("contact_no")
+    private String contact;
+    @Expose
+    @SerializedName("alt_contact")
+    private String alternateContact;
+    @Expose
+    @SerializedName("email_id")
+    private String email;
+    @Expose
+    @SerializedName("plot_no")
+    private String plotNo;
+    @Expose
+    @SerializedName("area")
+    private String area;
+    @Expose
+    @SerializedName("landmark")
+    private String landmark;
+    @Expose
+    @SerializedName("state_id")
+    private String stateId;
+    @Expose
+    @SerializedName("state_name")
+    private String stateName;
+    @Expose
+    @SerializedName("city")
+    private String city;
+    @Expose
+    @SerializedName("postal_code")
+    private String postalCode;
+    @Expose
+    @SerializedName("gstin")
+    private String gstin;
+
+    @Expose
+    @SerializedName("vehicle_no")
+    private String vehicleRegNo;
+
     private static CustomerInformation instance;
     private CustomerInformation() {
 

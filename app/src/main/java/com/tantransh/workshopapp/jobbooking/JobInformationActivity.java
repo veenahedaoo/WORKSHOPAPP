@@ -1,16 +1,15 @@
 package com.tantransh.workshopapp.jobbooking;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -22,7 +21,7 @@ import com.tantransh.workshopapp.R;
 import com.tantransh.workshopapp.appdata.BookingDetails;
 import com.tantransh.workshopapp.appdata.JobConcernItem;
 import com.tantransh.workshopapp.appdata.JobConcernList;
-import com.tantransh.workshopapp.appdata.Validator;
+import com.tantransh.workshopapp.listadapters.UserItemsListAdapter;
 import com.tantransh.workshopapp.services.ServiceDispatcher;
 
 import org.json.JSONArray;
@@ -37,11 +36,13 @@ public class JobInformationActivity extends AppCompatActivity {
     private EditText firstNameET, lastNameET, contactET;
     private BookingDetails bookingDetails;
     private LinearLayout driverLLO;
-    private JobConcernList itemList, userItems;
+    public static JobConcernList userItems;
+    private JobConcernList itemList;
     private Gson gson;
     private Spinner itemSpinner;
     private List<String> itemNameList;
-    private Button addItemsButton;
+    private UserItemsListAdapter userItemsListAdapter;
+    private RecyclerView itemsRV;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,20 +62,27 @@ public class JobInformationActivity extends AppCompatActivity {
         bookingDetails = BookingDetails.getInstance();
         itemSpinner = findViewById(R.id.item_list_rv);
         itemNameList = new ArrayList<>();
+        itemsRV = findViewById(R.id.items_rv);
+        itemsRV.setLayoutManager(new LinearLayoutManager(this));
+        itemsRV.setAdapter(userItemsListAdapter);
         serviceDispatcher.getItemList(new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println("Response : "+response);
                 try {
-                    JSONArray itemsArr = response.getJSONArray("result");
-                    for(int i = 0; i<itemsArr.length(); i++){
-                        JobConcernItem jobConcernItem = gson.fromJson(itemsArr.getJSONObject(i).toString(),JobConcernItem.class);
-                        itemList.addItem(jobConcernItem);
-                        itemNameList.add(jobConcernItem.itemName);
+                    switch (response.getInt("result")){
+                        case 200:
+                            JSONArray itemsArr = response.getJSONArray("data");
+                            for(int i = 0; i<itemsArr.length(); i++){
+                                JobConcernItem jobConcernItem = gson.fromJson(itemsArr.getJSONObject(i).toString(),JobConcernItem.class);
+                                itemList.addItem(jobConcernItem);
+                                itemNameList.add(jobConcernItem.itemName);
+                            }
+                            ArrayAdapter<String> itemsAdapter;
+                            itemsAdapter = new ArrayAdapter<>(JobInformationActivity.this,R.layout.layout_simple_spinner_item,itemNameList);
+                            itemSpinner.setAdapter(itemsAdapter);
                     }
-                    ArrayAdapter<String> itemsAdapter;
-                    itemsAdapter = new ArrayAdapter<String>(JobInformationActivity.this,android.R.layout.simple_spinner_item,itemNameList);
-                    itemSpinner.setAdapter(itemsAdapter);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -85,6 +93,8 @@ public class JobInformationActivity extends AppCompatActivity {
                 System.out.println("Error : "+error);
             }
         });
+
+
     }
 
     public void moveNext(View view){
@@ -95,6 +105,14 @@ public class JobInformationActivity extends AppCompatActivity {
         bookingDetails.setRepContact(contact);
         bookingDetails.setRepFName(firstName);
         bookingDetails.setRepLName(lastName);
+        if(userItems.getSize()<=0){
+            showMessage("Please select job concern for service booking");
+            return;
+        }
+        bookingDetails.setJobConcernList(JobInformationActivity.userItems);
+        Intent intent = new Intent(this,LaborInformationActivity.class);
+        startActivity(intent);
+
 
     }
 
@@ -110,6 +128,7 @@ public class JobInformationActivity extends AppCompatActivity {
         if (view == null) {
             view = new View(this);
         }
+        assert imm != null;
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
@@ -123,5 +142,19 @@ public class JobInformationActivity extends AppCompatActivity {
 
     public void showDriver(View view){
         driverLLO.setVisibility(View.VISIBLE);
+    }
+
+    public void addItems(View view){
+        int selectedItemId = itemSpinner.getSelectedItemPosition();
+        if(!userItems.isItemExists(itemList.getItem(selectedItemId).itemId))
+            userItems.addItem(itemList.getItem(selectedItemId));
+        else
+            showMessage("Already in list");
+        initUserSelectedItemList();
+    }
+
+    private void initUserSelectedItemList() {
+        userItemsListAdapter = new UserItemsListAdapter();
+        itemsRV.setAdapter(userItemsListAdapter);
     }
 }

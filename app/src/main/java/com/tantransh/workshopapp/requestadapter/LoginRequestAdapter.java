@@ -1,5 +1,6 @@
 package com.tantransh.workshopapp.requestadapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
@@ -15,14 +16,17 @@ import org.json.JSONObject;
 
 public class LoginRequestAdapter implements LoginRequestListener {
     private ServiceDispatcher serviceDispatcher;
+    @SuppressLint("StaticFieldLeak")
     private static LoginRequestAdapter instance;
     private Intent broadcastIntent;
     private Context context;
+    private AppPreferences appPreferences;
     public static LoginRequestAdapter getInstance(Context context){
 
         if(instance==null){
             instance = new LoginRequestAdapter(context);
             instance.context = context;
+            instance.appPreferences = AppPreferences.getInstance(context);
         }
         return instance;
     }
@@ -32,24 +36,27 @@ public class LoginRequestAdapter implements LoginRequestListener {
     }
 
     /**
-     * @param userId
-     * @param password
+     * @param userId userid
+     * @param password password
      */
     @Override
-    public void login(String userId, String password) {
-        serviceDispatcher.login(userId, password, new Response.Listener() {
+    public void login(String userId, final String password) {
+        serviceDispatcher.login(userId, password, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(Object response) {
-                JSONObject responseJson = (JSONObject) response;
+            public void onResponse(JSONObject response) {
+                JSONObject responseJson =  response;
+
                 try {
-                    if(responseJson.getString("msg").equals("SUCCESS")){
-                        success();
-                        AppPreferences ap = AppPreferences.getInstance(context);
-                        ap.addToken(responseJson.getString("token"));
+
+                    switch (responseJson.getInt("result")){
+                        case 200:
+                            responseJson = responseJson.getJSONObject("data");
+                            success();
+                            AppPreferences ap = AppPreferences.getInstance(context);
+                            ap.addUser(responseJson.getString("login_id"),responseJson.getString("auth"),responseJson.getString("user_type"),responseJson.getString("user_id"),password);
+                            break;
                     }
-                    else if(responseJson.getString("msg").equals("FAILED")){
-                        failed("FAILED");
-                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -58,9 +65,14 @@ public class LoginRequestAdapter implements LoginRequestListener {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
+                System.out.println("Error : "+error);
                 if(error.networkResponse!=null){
                     System.out.println("Error Code : "+error.networkResponse.statusCode);
+
+                }
+
+                if(error.networkResponse!=null && error.networkResponse.statusCode==401){
+                    failed("FAILED");
                 }
 
             }

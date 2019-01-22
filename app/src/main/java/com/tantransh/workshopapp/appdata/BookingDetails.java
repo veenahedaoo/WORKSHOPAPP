@@ -1,28 +1,47 @@
 package com.tantransh.workshopapp.appdata;
 
-import com.tantransh.workshopapp.jobbooking.data.JobServiceList;
-import com.tantransh.workshopapp.jobbooking.data.JobSpareList;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class BookingDetails {
+    @Expose
+    @SerializedName("booking_id")
     private String bookingId;
+
+    @Expose
+    @SerializedName("vehicle_reg_no")
     private String vehicleRegNo;
 
-    public String getBookingId() {
-        return bookingId;
-    }
-
-    public void setBookingId(String bookingId) {
-        this.bookingId = bookingId;
-    }
-
+    @Expose
+    @SerializedName("customer_id")
     private String customerId;
+
+    @Expose
+    @SerializedName("kilometers")
     private String kilometers;
-    private String repFName, repLName, repContact;
-    private JobSpareList jobSpareList;
-    private JobServiceList jobServiceList;
+
+    @Expose
+    @SerializedName("rep_fname")
+    private String repFName;
+
+    @Expose
+    @SerializedName("rep_lname")
+    private String repLName;
+
+    @Expose
+    @SerializedName("rep_contact")
+    private String repContact;
+
+    @Expose
+    @SerializedName("booking_date")
     private String bookingDate;
+
+    @Expose
+    @SerializedName("job_concern_list")
     private JobConcernList jobConcernList;
+
     private static BookingDetails instance;
+
     private BookingDetails(){}
 
     public String getRepFName() {
@@ -41,22 +60,6 @@ public class BookingDetails {
         this.repLName = repLName;
     }
 
-    public JobSpareList getJobSpareList() {
-        return jobSpareList;
-    }
-
-    public void setJobSpareList(JobSpareList jobSpareList) {
-        this.jobSpareList = jobSpareList;
-    }
-
-    public JobServiceList getJobServiceList() {
-        return jobServiceList;
-    }
-
-    public void setJobServiceList(JobServiceList jobServiceList) {
-        this.jobServiceList = jobServiceList;
-    }
-
     public String getBookingDate() {
         return bookingDate;
     }
@@ -73,7 +76,6 @@ public class BookingDetails {
     public void setRepContact(String repContact) {
         this.repContact = repContact;
     }
-
 
     public String getKilometers() {
 
@@ -114,5 +116,13 @@ public class BookingDetails {
 
     public void setJobConcernList(JobConcernList jobConcernList) {
         this.jobConcernList = jobConcernList;
+    }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
     }
 }

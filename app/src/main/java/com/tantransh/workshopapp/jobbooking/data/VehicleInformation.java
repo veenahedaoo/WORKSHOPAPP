@@ -1,12 +1,55 @@
 package com.tantransh.workshopapp.jobbooking.data;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class VehicleInformation implements Serializable {
 
-    private String vehicleRegNo, chassisNo, engineNo, make, makeId, model, modelYear, insurance, insuranceDate, insuranceType;
+    @Expose
+    @SerializedName("vehicle_no")
+    private String vehicleRegNo;
+
+    @Expose
+    @SerializedName("chassis_no")
+    private String chassisNo;
+
+    @Expose
+    @SerializedName("engine_no")
+    private String engineNo;
+
+    @Expose
+    @SerializedName("make_name")
+    private String make;
+
+    @Expose
+    @SerializedName("make_id")
+    private String makeId;
+
+    @Expose
+    @SerializedName("model")
+    private String model;
+
+    @Expose
+    @SerializedName("model_year")
+    private String modelYear;
+
+    @Expose
+    @SerializedName("insurance")
+    private String insurance;
+
+    @Expose
+    @SerializedName("insurance_date")
+    private String insuranceDate;
+
+    @Expose
+    @SerializedName("insurance_type")
+    private String insuranceType;
+
+
     private static VehicleInformation instance;
-    private VehicleInformation(){}
+//    private VehicleInformation(){}
 
     public String getMakeId() {
         return makeId;

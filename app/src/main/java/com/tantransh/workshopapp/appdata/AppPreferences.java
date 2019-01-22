@@ -1,5 +1,6 @@
 package com.tantransh.workshopapp.appdata;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -10,10 +11,10 @@ import android.content.SharedPreferences;
 public class AppPreferences {
 
     private SharedPreferences sp;
+    @SuppressLint("StaticFieldLeak")
     private static AppPreferences instance;
-    private Context context;
+
     private AppPreferences(Context context){
-        this.context = context;
         this.sp = context.getSharedPreferences(AppConstants.SP_NAME,Context.MODE_PRIVATE);
     }
 
@@ -24,8 +25,11 @@ public class AppPreferences {
         return instance;
     }
 
-    public void addUser(String userId, String password){
+    public void addUser(String loginId, String authToken, String userType, String userId, String password){
         getEditor().putString(AppConstants.SP_USER_ID,userId).apply();
+        getEditor().putString(AppConstants.SP_LOGIN_ID,loginId).apply();
+        getEditor().putString(AppConstants.SP_AUTH_TOKEN,authToken).apply();
+        getEditor().putString(AppConstants.SP_USER_TYPE,userType).apply();
         getEditor().putString(AppConstants.SP_PASSWRD,password).apply();
     }
 

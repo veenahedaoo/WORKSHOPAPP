@@ -1,10 +1,54 @@
 package com.tantransh.workshopapp.openjobs;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class OpenJobInfo implements Serializable {
 
-    private String vehicleNo, make, model , bookingStatus, bookingDate, bookedBy,bookingId, customerName, customerContact, repName, repContact,username;
+    @Expose
+    @SerializedName("vehicle_registration_number")
+    private String vehicleNo;
+    @Expose
+    @SerializedName("make")
+    private String make;
+    @Expose
+    @SerializedName("model")
+    private String model;
+    @Expose
+    @SerializedName("booking_status")
+    private String bookingStatus;
+    @Expose
+    @SerializedName("booking_date")
+    private String bookingDate;
+    @Expose
+    @SerializedName("booked_by")
+    private String bookedBy;
+    @Expose
+    @SerializedName("booking_id")
+    private String bookingId;
+    @Expose
+    @SerializedName("customer_name")
+    private String customerName;
+    @Expose
+    @SerializedName("customer_contact")
+    private String customerContact;
+    @Expose
+    @SerializedName("rep_fname")
+    private String repFirstName;
+
+    @Expose
+    @SerializedName("rep_lname")
+    private String repLastName;
+
+    @Expose
+    @SerializedName("rep_number")
+    private String repContact;
+
+    @Expose
+    @SerializedName("user_name")
+    private String username;
 
     public String getVehicleNo() {
         return vehicleNo;
@@ -86,19 +130,27 @@ public class OpenJobInfo implements Serializable {
         this.customerContact = customerContact;
     }
 
-    public String getRepName() {
-        return repName;
-    }
-
-    public void setRepName(String repName) {
-        this.repName = repName;
-    }
-
     public String getRepContact() {
         return repContact;
     }
 
     public void setRepContact(String repContact) {
         this.repContact = repContact;
+    }
+
+    public String getRepLastName() {
+        return repLastName;
+    }
+
+    public void setRepLastName(String repLastName) {
+        this.repLastName = repLastName;
+    }
+
+    public String getRepFirstName() {
+        return repFirstName;
+    }
+
+    public void setRepFirstName(String repFirstName) {
+        this.repFirstName = repFirstName;
     }
 }

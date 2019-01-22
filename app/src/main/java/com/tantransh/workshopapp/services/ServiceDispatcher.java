@@ -1,18 +1,16 @@
 package com.tantransh.workshopapp.services;
 
-import android.app.Service;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -23,19 +21,20 @@ import com.tantransh.workshopapp.appdata.Validator;
 import com.tantransh.workshopapp.jobbooking.data.CustomerInformation;
 import com.tantransh.workshopapp.jobbooking.data.VehicleInformation;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ServiceDispatcher implements RequestListener{
     private RequestQueue queue;
-    private ImageLoader imageLoader;
+    @SuppressLint("StaticFieldLeak")
     private static  ServiceDispatcher instance;
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
+    private ImageLoader imageLoader;
 
     private ServiceDispatcher(Context context){
         ServiceDispatcher.context = context;
@@ -66,16 +65,25 @@ public class ServiceDispatcher implements RequestListener{
         return imageLoader;
     }
 
+    /**
+     * method name : login
+     * @param userId = user_id (mobile number which is used to get login);
+     * @param password = password for authentication;
+     * @param listener = response listener to handle server response;
+     * @param errorListener = error listener to handle errors;
+     * sends request to server to logged in and collects the server response
+     */
     @Override
-    public void login(final String userId, final String password, Response.Listener listener, Response.ErrorListener errorListener){
+    public void login(final String userId, final String password, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener){
         JSONObject json = new JSONObject();
         try {
-            json.put("userId",userId);
+            json.put("user_id",userId);
             json.put("password",password);
             json.put("request","login");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        System.out.println(ServiceData.BASEURL+ServiceData.AUTHURL);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.AUTHURL,json,listener,errorListener){
 
 
@@ -87,11 +95,8 @@ public class ServiceDispatcher implements RequestListener{
                     System.out.println("Response : "+res);
                     JSONObject resJSON = new JSONObject(res);
 
-                } catch (UnsupportedEncodingException e) {
+                } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
                 }
                 return super.parseNetworkResponse(response);
             }
@@ -106,12 +111,24 @@ public class ServiceDispatcher implements RequestListener{
 
     }
 
-
-
+    /**
+     * methodname : searchVehicle
+     * @param vehicleId vehicle registration number
+     * @param listener response listener
+     * @param errorListener error listener
+     *
+     */
     @Override
-    public void searchVehicle(String vehicleId, Response.Listener listener, Response.ErrorListener errorListener) {
+    public void searchVehicle(String vehicleId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         vehicleId = vehicleId.replace(" ","%20");
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,ServiceData.BASEURL+ServiceData.GETURL+"?vehicleNo="+vehicleId+"&request=vehicledetails",null,listener,errorListener){
+        JSONObject reqJson = new JSONObject();
+        try {
+            reqJson.put("vehicle_no",vehicleId);
+            reqJson.put("request","vehicledetails");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.DATAURL,reqJson,listener,errorListener){
             @Override
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 try {
@@ -119,8 +136,6 @@ public class ServiceDispatcher implements RequestListener{
                     System.out.println(res);
 
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -131,20 +146,27 @@ public class ServiceDispatcher implements RequestListener{
         queue.add(request);
     }
 
+
+    /**
+     *
+     * @param customerInformation customer information class which holds all details related to customer
+     * @param listener response listener
+     * @param errorListener error listener
+     */
     @Override
-    public void addCustomer(CustomerInformation customerInformation, Response.Listener listener, Response.ErrorListener errorListener) {
+    public void addCustomer(CustomerInformation customerInformation, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(customerInformation);
-        JSONObject json = null;
+        JSONObject json;
 
         try {
             json = new JSONObject(jsonString);
 
             json.put("request","add_customer");
-            json.put("vehicleNo",BookingDetails.getInstance().getVehicleRegNo());
+            json.put("vehicle_no",BookingDetails.getInstance().getVehicleRegNo());
 
             System.out.println("JSON: "+json);
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.POSTURL,json,listener,errorListener){
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.DATAURL,json,listener,errorListener){
                 @Override
                 protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                     try {
@@ -166,15 +188,22 @@ public class ServiceDispatcher implements RequestListener{
         }
     }
 
+    /**
+     *
+     * @param vehicleInformation vehicle information object which has all details related vehcile
+     * @param listener response listener
+     * @param errorListener error listener
+     * @throws JSONException json exception
+     */
     @Override
-    public void registerVehicle(VehicleInformation vehicleInformation, Response.Listener listener, Response.ErrorListener errorListener) throws JSONException {
+    public void registerVehicle(VehicleInformation vehicleInformation, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) throws JSONException {
         Gson gson = new Gson();
         String jsonString = gson.toJson(vehicleInformation);
         JSONObject requestJSON = new JSONObject(jsonString);
-        requestJSON.put("request","reg_vehicle");
+        requestJSON.put("request","add_vehicle");
         System.out.println(requestJSON);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.POSTURL,requestJSON,listener,errorListener){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.DATAURL,requestJSON,listener,errorListener){
             @Override
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 try {
@@ -182,11 +211,8 @@ public class ServiceDispatcher implements RequestListener{
                     System.out.println(res);
                     JSONObject resJSON = new JSONObject(res);
 
-                } catch (UnsupportedEncodingException e) {
+                } catch (UnsupportedEncodingException | JSONException e) {
                     e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
                 }
                 return super.parseNetworkResponse(response);
             }
@@ -195,9 +221,14 @@ public class ServiceDispatcher implements RequestListener{
     }
 
 
+    /**
+     *
+     * @param listener response listener
+     * @param errorListener error listener
+     */
 
     @Override
-    public void getState(Response.Listener listener, Response.ErrorListener errorListener){
+    public void getState(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener){
 
         JSONObject json = new JSONObject();
         try {
@@ -205,7 +236,7 @@ public class ServiceDispatcher implements RequestListener{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,ServiceData.BASEURL+ServiceData.GETURL+"?request=state_list",null,listener,errorListener);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.CONTENTSERVICE,json,listener,errorListener);
 
         request.setRetryPolicy(new DefaultRetryPolicy(
                 5000,
@@ -215,68 +246,27 @@ public class ServiceDispatcher implements RequestListener{
         queue.add(request);
     }
 
+    /**
+     *
+     * @param listener response listener
+     * @param errorListener error listener
+     */
     @Override
-    public void getCities(String stateCode, Response.Listener listener, Response.ErrorListener errorListener){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.GETURL,null,listener,errorListener){
-
-        };
-
-    }
-
-    @Override
-    public void getSpares(Response.Listener listener, Response.ErrorListener errorListener){
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, ServiceData.BASEURL+ServiceData.GETURL+"?request=spare_list",null,listener,errorListener){
+    public void getMake(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        JSONObject reqJSON = new JSONObject();
+        try {
+            reqJSON.put("request","get_vehicle_make");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.CONTENTSERVICE,reqJSON,listener,errorListener){
             @Override
-            protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
-                try {
-
-                    String res = new String(response.data,"UTF-8");
-                    System.out.println(res);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                return super.parseNetworkResponse(response);
-            }
-        };
-
-        queue.add(request);
-    }
-
-    @Override
-    public void getServices(Response.Listener listener, Response.ErrorListener errorListener){
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, ServiceData.BASEURL+ServiceData.GETURL+"?request=service_list",null,listener,errorListener){
-            @Override
-            protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String res = new String(response.data,"UTF-8");
-                    System.out.println(res);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                }
-
-                return super.parseNetworkResponse(response);
-            }
-        };
-
-        queue.add(request);
-    }
-
-    @Override
-    public void getMake(Response.Listener listener, Response.ErrorListener errorListener) {
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,ServiceData.BASEURL+ServiceData.GETURL+"?request=makelist",null,listener,errorListener){
-            @Override
-            protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 try {
                     String res = new String(response.data,"UTF-8");
                     System.out.println(res);
 
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -287,19 +277,34 @@ public class ServiceDispatcher implements RequestListener{
         queue.add(request);
     }
 
+    /**
+     *
+     * @param listener response listener
+     * @param errorListener error listener
+     */
     @Override
-    public void getCurrentJobs(Response.Listener listener, Response.ErrorListener errorListener) {
+    public void getCurrentJobs(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,ServiceData.BASEURL+ServiceData.GETURL+"?request=current_jobs&bookingDate="+Validator.getCurrentDate()+"&userId="+AppPreferences.getInstance(context).getUserId(),null,listener,errorListener){
+        JSONObject json = new JSONObject();
+        try {
+            json.put("request","get_current_jobs");
+            json.put("user_id",AppPreferences.getInstance(context).getUserId());
+            json.put("status",1);
+            json.put("from_date",Validator.getCurrentDate());
+            json.put("to_date",Validator.getCurrentDate());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.JOBSERVICE,json,listener,errorListener){
             @Override
-            protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 try {
                     String res = new String(response.data,"UTF-8");
                     System.out.println(res);
 
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -312,17 +317,21 @@ public class ServiceDispatcher implements RequestListener{
     }
 
     @Override
-    public void getOpenJobs(Response.Listener listener, Response.ErrorListener errorListener) {
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,ServiceData.BASEURL+ServiceData.GETURL+"?request=open_jobs&userId="+AppPreferences.getInstance(context).getUserId(),null,listener,errorListener){
+    public void getOpenJobs(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("request","open_jobs");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.JOBSERVICE,json,listener,errorListener){
             @Override
-            protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 try {
                     String res = new String(response.data,"UTF-8");
                     System.out.println(res);
 
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -334,22 +343,42 @@ public class ServiceDispatcher implements RequestListener{
         queue.add(request);
     }
 
-    @Override
-    public void getJobCard() {
+    /**
+     *
+     * @param jobId booking_id
+     */
 
+    @Override
+    public void getJobInformation(String jobId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+
+        JSONObject json = new JSONObject();
+        try {
+            json.put("request","detail_job_information");
+            json.put("booking_id",jobId);
+            System.out.println(json);
+            System.out.println(ServiceData.BASEURL+ServiceData.JOBSERVICE);
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.JOBSERVICE,json,listener,errorListener);
+
+            queue.addRequestFinishedListener(new RequestQueue.RequestFinishedListener<Object>() {
+                @Override
+                public void onRequestFinished(Request<Object> request) {
+                    System.out.println("request finished");
+                }
+            });
+            queue.add(request);
+            System.out.println("request sent : "+queue.getSequenceNumber());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void getJobInformation(String jobId) {
-
-    }
-
-    @Override
-    public void getItemList(Response.Listener listener, Response.ErrorListener errorListener) {
+    public void getItemList(Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         JSONObject jsonObject = new JSONObject();
         try{
-            jsonObject.put("request","item_list");
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, ServiceData.BASEURL_2+ServiceData.APPCONTROLER,jsonObject,listener,errorListener);
+            jsonObject.put("request","get_items");
+            jsonObject.put("category_id",1);
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, ServiceData.BASEURL_2+ServiceData.CONTENTSERVICE,jsonObject,listener,errorListener);
             queue.add(request);
 
         } catch (JSONException e) {
@@ -358,59 +387,41 @@ public class ServiceDispatcher implements RequestListener{
     }
 
     @Override
-    public void searchCustomerByContact(String mobileNo, Response.Listener listener, Response.ErrorListener errorListener){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,ServiceData.BASEURL+ServiceData.GETURL+"?request=search_customer_by_contact&contact="+mobileNo,null,listener,errorListener){
-            @Override
-            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String res = new String(response.data,"UTF-8");
-                    System.out.println(res);
-
-
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                }
-                return super.parseNetworkResponse(response);
-            }
-        };
-
+    public void searchCustomerByContact(String mobileNo, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener){
+        JSONObject json = new JSONObject();
+        try {
+            json.put("request","search_customer_by_contact");
+            json.put("contact_no",mobileNo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.DATAURL,json,listener,errorListener);
         queue.add(request);
     }
 
     @Override
-    public void searchCustomerByVehicle(String vehicleNo, Response.Listener listener, Response.ErrorListener errorListener){
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,ServiceData.BASEURL+ServiceData.GETURL+"?request=search_customer_by_vehicle&vehicleNo="+vehicleNo,null,listener,errorListener){
-            @Override
-            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String res = new String(response.data,"UTF-8");
-                    System.out.println(res);
-
-
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return super.parseNetworkResponse(response);
-            }
-        };
+    public void searchCustomerByVehicle(String vehicleNo, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener){
+        JSONObject json = new JSONObject();
+        try {
+            json.put("request","search_customer_by_vehicle");
+            json.put("vehicle_no",vehicleNo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.DATAURL,json,listener,errorListener);
         queue.add(request);
     }
 
     @Override
-    public void bookJob(BookingDetails bookingDetails, Response.Listener listener, Response.ErrorListener errorListener) {
+    public void bookJob(BookingDetails bookingDetails, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         Gson gson = new Gson();
         String json = gson.toJson(bookingDetails);
         try {
             JSONObject reqJSON = new JSONObject(json);
             reqJSON.put("request","book_job");
-            reqJSON.put("bookedBy", AppPreferences.getInstance(context).getUserId());
-
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, ServiceData.BASEURL+ServiceData.POSTURL,reqJSON,listener,errorListener){
+            reqJSON.put("booked_by", AppPreferences.getInstance(context).getUserId());
+            System.out.println(reqJSON);
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, ServiceData.BASEURL+ServiceData.JOBSERVICE,reqJSON,listener,errorListener){
                 @Override
                 protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                     try {
@@ -433,25 +444,20 @@ public class ServiceDispatcher implements RequestListener{
     }
 
     @Override
-    public void getJobList(String userId, String status, Response.Listener listener, Response.ErrorListener errorListener) {
+    public void getJobList(String userId, String status, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
 
     }
 
     @Override
-    public void changeCustomer(String customerId, String vehicleId, Response.Listener listener, Response.ErrorListener errorListener) {
-
-    }
-
-    @Override
-    public void updateCustomer(CustomerInformation customerInformation, Response.Listener listener, Response.ErrorListener errorListener) {
+    public void updateCustomer(CustomerInformation customerInformation, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(customerInformation);
         try {
             JSONObject reqJson = new JSONObject(jsonString);
             reqJson.put("request","update_customer");
-            reqJson.put("vehicleNo",BookingDetails.getInstance().getVehicleRegNo());
+            reqJson.put("vehicle_no",BookingDetails.getInstance().getVehicleRegNo());
             System.out.println("Request : "+reqJson);
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT,ServiceData.BASEURL+ServiceData.PUTURL,reqJson,listener,errorListener){
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT,ServiceData.BASEURL+ServiceData.DATAURL,reqJson,listener,errorListener){
                 @Override
                 protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                     try {
@@ -459,8 +465,6 @@ public class ServiceDispatcher implements RequestListener{
                         System.out.println(res);
 
 
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
                     } catch (Exception e) {
                         e.printStackTrace();
 
@@ -476,7 +480,7 @@ public class ServiceDispatcher implements RequestListener{
     }
 
     @Override
-    public void updateVehicle(VehicleInformation vehicleInformation, Response.Listener listener, Response.ErrorListener errorListener) {
+    public void updateVehicle(VehicleInformation vehicleInformation, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(vehicleInformation);
         JSONObject json = null;
@@ -487,7 +491,7 @@ public class ServiceDispatcher implements RequestListener{
             e.printStackTrace();
         }
         System.out.println(json);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT,ServiceData.BASEURL+ServiceData.PUTURL,json,listener,errorListener){
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT,ServiceData.BASEURL+ServiceData.DATAURL,json,listener,errorListener){
             @Override
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 try {
@@ -495,8 +499,6 @@ public class ServiceDispatcher implements RequestListener{
                     System.out.println(res);
 
 
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
 
@@ -513,35 +515,19 @@ public class ServiceDispatcher implements RequestListener{
 
     }
 
-    public void uploadPicture(final String image, Response.Listener listener, Response.ErrorListener errorListener){
-        JSONObject json = new JSONObject();
-        try {
-            json.put("request","upload_picture");
-            json.put("image",image);
-            json.put("bookingId",BookingDetails.getInstance().getBookingId());
+    public void uploadPicture(final String image, Response.Listener<String> listener, Response.ErrorListener errorListener){
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        StringRequest request = new StringRequest(Request.Method.POST,ServiceData.BASEURL+ServiceData.JOBSERVICE,listener,errorListener){
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, ServiceData.BASEURL+ServiceData.POSTURL,json,listener,errorListener ){
             @Override
-            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                try {
-                    String res = new String(response.data,"UTF-8");
-                    System.out.println(res);
-
-
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                }
-                return super.parseNetworkResponse(response);
+            protected Map<String, String> getParams() {
+                Map<String,String> params = new HashMap<>();
+                params.put("request","upload_picture");
+                params.put("image",image);
+                params.put("booking_id",BookingDetails.getInstance().getBookingId());
+                return params;
             }
         };
-
         queue.add(request);
     }
 

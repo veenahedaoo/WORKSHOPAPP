@@ -19,6 +19,8 @@ import com.tantransh.workshopapp.appdata.Validator;
 import com.tantransh.workshopapp.home.DashboardActivity;
 import com.tantransh.workshopapp.requestadapter.LoginRequestAdapter;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
 
     private TextView userIdET,passwordET;
@@ -38,10 +40,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 System.out.println("Received action : "+intent.getAction());
-                switch (intent.getAction()){
+                switch (Objects.requireNonNull(intent.getAction())){
 
                     case AppConstants.ACTION_LOGIN_SUCCESS:
-                        ap.addUser(userIdET.getText().toString(),passwordET.getText().toString());
                         startActivity(new Intent(context, DashboardActivity.class));
                         break;
                     case AppConstants.ACTION_LOGIN_FAILED:
@@ -101,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             unregisterReceiver(receiver);
         }
         catch (Exception ex){
-
+            ex.printStackTrace();
         }
         super.onPause();
     }

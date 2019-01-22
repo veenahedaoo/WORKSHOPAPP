@@ -19,26 +19,50 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:fullBackupContent="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity">
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.LoginActivity" />
-        <activity android:name=".home.DashboardActivity" />
-        <activity android:name=".jobbooking.VehicleInformationActivity" />
-        <activity android:name=".jobbooking.CustomerInformationActivity" />
-        <activity android:name=".jobbooking.JobInformationActivity" />
-        <activity android:name=".jobbooking.SpareRepairingActivity" />
-        <activity android:name=".jobbooking.LaborInformationActivity" />
-        <activity android:name=".currentjobs.CurrentJobListActivity" />
-        <activity android:name=".jobcard.SerchJobcardActivity" />
-        <activity android:name=".jobcard.JobCardDetailsActivity" />
-        <activity android:name=".openjobs.OpenJobsActivity" />
-        <activity android:name=".jobbooking.ServiceBookingActivity"></activity>
+        <activity android:name=".login.LoginActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".home.DashboardActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".jobbooking.VehicleInformationActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".jobbooking.CustomerInformationActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".jobbooking.JobInformationActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".jobbooking.LaborInformationActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".currentjobs.CurrentJobListActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".jobcard.SerchJobcardActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".jobcard.JobCardDetailsActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".openjobs.OpenJobsActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".jobbooking.ServiceBookingActivity"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

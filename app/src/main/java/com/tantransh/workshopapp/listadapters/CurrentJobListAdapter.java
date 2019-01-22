@@ -1,7 +1,7 @@
 package com.tantransh.workshopapp.listadapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,6 +21,7 @@ public class CurrentJobListAdapter extends RecyclerView.Adapter<CurrentJobListAd
     private CurrentJobList currentJobList;
     private Context context;
 
+    @SuppressLint("StaticFieldLeak")
     private static CurrentJobListAdapter instance;
     private CurrentJobListAdapter(Context context,CurrentJobList currentJobList){
         this.context = context;
@@ -39,18 +40,19 @@ public class CurrentJobListAdapter extends RecyclerView.Adapter<CurrentJobListAd
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_currentjob_list_item,viewGroup,false);
-        Holder holder = new Holder(view);
-        return holder;
+        return new Holder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int i) {
         CurrentJobInfo currentJobInfo = currentJobList.getJob(i);
         holder.jobCardTV.setText(currentJobInfo.getBookingId());
         holder.vehicleRegNoTV.setText(currentJobInfo.getVehicleNo());
-        holder.makeModelTV.setText(currentJobInfo.getMakeName()+" "+currentJobInfo.getModel());
-        holder.customerNameTV.setText(currentJobInfo.getFirstName()+" "+currentJobInfo.getLastName());
+        holder.makeModelTV.setText(currentJobInfo.getMakeName()+" ("+currentJobInfo.getModel()+")");
+        holder.customerNameTV.setText(currentJobInfo.getCustomerName());
         holder.customerContactTV.setText(currentJobInfo.getContact());
+        currentJobInfo.setBookingStatus("1");
         int progress = AppConstants.getProgress(currentJobInfo.getBookingStatus());
         holder.jobStatusTV.setText(AppConstants.getProgressMessage(currentJobInfo.getBookingStatus()));
         holder.statusProgressPB.setProgress(progress);
@@ -67,7 +69,7 @@ public class CurrentJobListAdapter extends RecyclerView.Adapter<CurrentJobListAd
         private TextView jobCardTV, vehicleRegNoTV, makeModelTV, jobStatusTV, customerNameTV, customerContactTV;
         private ProgressBar statusProgressPB;
         private Button viewMoreButton;
-        public Holder(@NonNull View itemView) {
+        Holder(@NonNull View itemView) {
             super(itemView);
             jobCardTV = itemView.findViewById(R.id.jobCardTV);
             vehicleRegNoTV = itemView.findViewById(R.id.vehicleRegNoTV);

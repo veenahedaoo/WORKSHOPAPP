@@ -1,10 +1,15 @@
 package com.tantransh.workshopapp.appdata;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class JobConcernList {
 
+    @Expose
+    @SerializedName("job_concern_item")
     private List<JobConcernItem> jobConcernItems;
 
     private JobConcernList(){
@@ -44,6 +49,14 @@ public class JobConcernList {
         return null;
     }
 
+    public boolean isItemExists(String itemId){
+        for(int i = 0 ; i<getSize(); i++){
+            if(getItem(i).itemId.equalsIgnoreCase(itemId)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

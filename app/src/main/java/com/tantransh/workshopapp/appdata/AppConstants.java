@@ -16,6 +16,8 @@ public class AppConstants {
     public static final String SP_USER_ID = "USER_ID";
     public static final String SP_PASSWRD = "PASSWORD";
     public static final String SP_AUTH_TOKEN = "AUTH_TOKEN";
+    public static final String SP_LOGIN_ID = "LOGIN_ID";
+    public static final String SP_USER_TYPE = "USER_TYPE";
 
     /**
      * extra intents name
@@ -63,6 +65,7 @@ public class AppConstants {
     public final static String ACTION_OPEN_JOB_LIST_LOADED = "OPEN_JOB_LIST_LOADED";
     public final static String ACTION_JOB_CARD_LOADED = "JOB_CARD_LOADED";
     public final static String ACTION_JOB_INFO_LOADED = "JOB_INFO_LOADED";
+    public final static String ACTION_DUPLICATE_SERVICE_BOOKING = "DUPLICATE_SERVICE_BOOKING";
 
 
     public static int getProgress(String bookingStatus){

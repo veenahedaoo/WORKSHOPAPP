@@ -10,9 +10,12 @@ public class ImageList  {
 
     private static ImageList instance;
 
+    private static int uploadedImages = 0;
+
     public static ImageList getInstance(){
         if(instance == null)
             instance = new ImageList();
+        uploadedImages = 0;
         return instance;
     }
 
@@ -38,6 +41,14 @@ public class ImageList  {
 
     public void clear(){
         imageList.clear();
+    }
+
+    public void imageUploaded(){
+        uploadedImages++;
+    }
+
+    public int uploadedImageCount(){
+        return uploadedImages;
     }
 
 }

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.tantransh.workshopapp.jobbooking.JobInformationActivity">
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="55dp">
@@ -15,14 +16,15 @@
             android:layout_height="match_parent">
             <ImageView
                 android:onClick="back"
-                android:layout_marginLeft="5dp"
+                android:layout_height="30dp"
                 android:tint="@color/white"
                 android:src="@drawable/back_icon"
                 android:layout_gravity="center"
                 android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_marginStart="5dp"
+                android:contentDescription="@string/app_name" />
             <LinearLayout
-                android:layout_marginRight="35dp"
+                android:layout_marginEnd="35dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -32,7 +34,7 @@
                     android:gravity="center"
                     android:padding="3dp"
                     android:textSize="18sp"
-                    android:text="Job Booking"
+                    android:text="@string/job_booking"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -42,7 +44,7 @@
                     android:gravity="center"
                     android:padding="0dp"
                     android:textSize="14sp"
-                    android:text="( Job Information )"
+                    android:text="@string/job_booking"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -51,188 +53,207 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-        android:padding="10dp"
-        android:layout_marginTop="55dp"
-        android:orientation="vertical"
+        android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:background="@drawable/square_border1"
-            android:padding="1dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent">
+        <Button
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Spinner
-                android:id="@+id/item_list_rv"
-                android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="cancel"
+            android:text="@string/cancel"
+            android:textColor="@color/gray0"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:ignore="ButtonStyle" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:onClick="moveNext"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_layout"
+        android:layout_below="@id/app_bar_layout">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/square_border1"
+                android:padding="1dp">
+                <Spinner
+                    android:id="@+id/item_list_rv"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/add_items_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="3dp"
+                    android:background="@color/colorPrimary"
+                    android:onClick="addItems"
+                    android:text="@string/add_op"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimaryDark"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="@string/sr_no"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:text="@string/job_concern"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"/>
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="@string/remove"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/items_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
             <Button
-                android:id="@+id/add_items_button"
-                android:layout_margin="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/green"
+                android:onClick="showDriver"
+                android:text="@string/add_rep"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:background="@color/colorPrimary"
-                android:text="+"
-                android:layout_width="30dp"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:background="@color/colorPrimaryDark"
-            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                android:text="Sr.No"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/white"/>
-            <TextView
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                android:text="Job Concern"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/white"/>
-            <TextView
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="13sp"
-                android:text="Remove"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-
-
-        <Button
-            android:onClick="showDriver"
-            android:layout_marginTop="15dp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:background="@color/green"
-            android:textAllCaps="false"
-            android:textSize="12sp"
-            android:text="Add Driver"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp" />
-        <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/driverInfoLLO"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_marginTop="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="normal"
-                android:textSize="11sp"
-                android:text="Customer Representative name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:background="@drawable/square_border1"
-                android:orientation="horizontal"
+                android:id="@+id/driverInfoLLO"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/firstNameET"
-                    android:inputType="textPersonName"
-                    android:textSize="12sp"
-                    android:hint="First Name"
-                    android:padding="10dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <View
-                    android:layout_width="0.5dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorAccent"/>
-                <EditText
-                    android:id="@+id/lastNameET"
-                    android:inputType="textPersonName"
-                    android:textSize="12sp"
-                    android:hint="Last Name"
-                    android:padding="10dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/rep_name"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="11sp"
+                    android:textStyle="normal"
+                    tools:ignore="SmallSp" />
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/square_border1"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/firstNameET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/first_name"
+                        android:inputType="textPersonName"
+                        android:padding="10dp"
+                        android:textSize="12sp" />
 
-            </LinearLayout>
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorAccent"/>
+                    <EditText
+                        android:id="@+id/lastNameET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/last_name"
+                        android:inputType="textPersonName"
+                        android:padding="10dp"
+                        android:textSize="12sp" />
 
-            <TextView
-                android:layout_marginTop="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="normal"
-                android:textSize="11sp"
-                android:text="Contact Number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_marginTop="2dp"
-                android:background="@drawable/square_border1"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/contactET"
-                    android:inputType="phone"
-                    android:textSize="12sp"
-                    android:hint="Customer Representative Contact Number"
-                    android:padding="10dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/contact_no"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="11sp"
+                    android:textStyle="normal"
+                    tools:ignore="SmallSp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/square_border1"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/contactET"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/rep_contact"
+                        android:inputType="phone"
+                        android:padding="10dp"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorAccent"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <Button
-            android:onClick="cancel"
-            android:background="@android:color/transparent"
-            android:textColor="@color/gray0"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:text="Cancel"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <Button
-            android:onClick="moveNext"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:text="Next"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
 </RelativeLayout>
